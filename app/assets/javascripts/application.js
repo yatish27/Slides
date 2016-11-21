@@ -13,3 +13,4 @@
 //= require jquery
 //= require jquery_ujs
 //= require reveal/reveal
+//= require reveal/plugin/highlight/highlight.js
