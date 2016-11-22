@@ -12,5 +12,18 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require cable
 //= require reveal/reveal
 //= require reveal/plugin/highlight/highlight.js
+
+App.cable.subscriptions.create("SlidesChannel", {
+  connected: function() {
+    return console.log("I gt some data");
+  },
+
+  received: function(data) {
+    console.log("I some data received");  
+  }
+});
+
+console.log(2);

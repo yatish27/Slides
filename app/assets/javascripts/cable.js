@@ -5,9 +5,8 @@
 //= require_self
 //= require_tree ./channels
 
-(function() {
-  this.App || (this.App = {});
 
-  App.cable = ActionCable.createConsumer();
+this.App = {};
+App.cable = ActionCable.createConsumer('/websocket');
 
-}).call(this);
+console.log("1");
