@@ -16,14 +16,53 @@
 //= require reveal/reveal
 //= require reveal/plugin/highlight/highlight.js
 
-App.cable.subscriptions.create("SlidesChannel", {
-  connected: function() {
-    return console.log("I gt some data");
-  },
+function initAuthor() {
+  Reveal.initialize({
+    hideAddressBar: true,
+    keyboard: true,
+    controls: true,
+    progress: false,
+    center: true,
+  });
 
-  received: function(data) {
-    console.log("I some data received");  
-  }
-});
+  App.messages = App.cable.subscriptions.create("SlidesChannel", {
+    broadcastCurrentSlide: function(data) {
+      this.perform("broadcast_current_slide", data);
+    },
+  });
 
-console.log(2);
+  Reveal.addEventListener( 'slidechanged', function( event ) {
+    App.messages.broadcastCurrentSlide({"current_slide": event.indexh});
+  } );
+}
+
+function initUser() {
+  Reveal.initialize({
+    hideAddressBar: true,
+    keyboard: false,
+    controls: false,
+    progress: false,
+    center: true,
+  });
+
+  App.messages = App.cable.subscriptions.create("SlidesChannel", {
+    received: function(data) {
+      // Navigate to slide data["slide"]
+      Reveal.slide(data["current_slide"]);
+    },
+
+    getCurrentSlide: function() {
+      this.perform("get_current_slide")
+    },
+
+    connected: function() {
+      App.messages.getCurrentSlide();
+    },
+  });
+}
+
+if (window.author === true) {
+  initAuthor();
+} else {
+  initUser();
+}
