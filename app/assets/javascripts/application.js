@@ -16,13 +16,27 @@
 //= require reveal/reveal
 
 
+var SLConfig = {"deck":{"notes":{"b50689f76f085eab532297e6c69295b3":"You can refresh by adding this meta tag in the head"}}};
+
 function initAuthor() {
+
+  if( SLConfig.deck.notes ) {
+  				[].forEach.call( document.querySelectorAll( '.reveal .slides section' ), function( slide ) {
+
+  					var value = SLConfig.deck.notes[ slide.getAttribute( 'data-id' ) ];
+  					if( value && typeof value === 'string' ) {
+  						slide.setAttribute( 'data-notes', value );
+  					}
+
+  				} );
+  			}
   Reveal.initialize({
     hideAddressBar: true,
     keyboard: true,
     controls: true,
     progress: false,
     center: true,
+    showNotes: true
   });
 
   App.messages = App.cable.subscriptions.create("SlidesChannel", {
@@ -43,6 +57,7 @@ function initUser() {
     controls: false,
     progress: false,
     center: true,
+    showNotes: false
   });
 
   App.messages = App.cable.subscriptions.create("SlidesChannel", {
