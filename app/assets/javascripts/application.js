@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require cable
 //= require reveal/reveal
-//= require reveal/plugin/highlight/highlight.js
+
 
 function initAuthor() {
   Reveal.initialize({

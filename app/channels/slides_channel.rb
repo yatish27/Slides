@@ -5,7 +5,7 @@ class SlidesChannel < ApplicationCable::Channel
 
   def get_current_slide
     current_slide = REDIS.get("current_slide")
-    ActionCable.server.broadcast "current_slide", { "current_slide"=> current_slide }
+    ActionCable.server.broadcast "current_slide", { "current_slide" => current_slide }
   end
 
   def broadcast_current_slide(data)

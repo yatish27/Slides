@@ -8,5 +8,3 @@
 
 this.App = {};
 App.cable = ActionCable.createConsumer('/websocket');
-
-console.log("1");
